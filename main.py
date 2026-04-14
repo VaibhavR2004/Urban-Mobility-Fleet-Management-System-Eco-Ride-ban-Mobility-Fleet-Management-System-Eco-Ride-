@@ -30,6 +30,9 @@ class Vehicle(ABC):
       @abstractmethod
       def calculate_trip_cost(self,distance):
             pass
+      def __eq__(self, other):
+            return self.vehicle_id==other.vehicle_id
+
 class Electric_Cars(Vehicle):
       def __init__(self, vehicle_id, model, battery_percentage,seating_capacity):
             super().__init__(vehicle_id, model, battery_percentage)
@@ -54,13 +57,12 @@ class Fleet_Management:
       def add_hub(self,hub_name):
             if hub_name not in self.hubs:
                   self.hubs[hub_name]=[]
-      def add_vehicle(self,hub_name,vehicle_name):
+      def add_vehicle(self,hub_name,vehicle):
             if hub_name not in self.hubs:
                   return f"{hub_name}, Not fount"
-            elif vehicle_name in self.hubs[hub_name]:
-                  return f"{vehicle_name}, Already Exist"
-            else:
-                  self.hubs[hub_name]=vehicle_name
-            
+            existing_ids = [v.vehicle_if for v in self.hubs[hub_name]]
 
+            if vehicle.vehicle_id in existing_ids:
+                  return f"{vehicle.vehicle_id}, Duplicate Vehicle"
 
+            self.hubs[hub_name].append(vehicle)
