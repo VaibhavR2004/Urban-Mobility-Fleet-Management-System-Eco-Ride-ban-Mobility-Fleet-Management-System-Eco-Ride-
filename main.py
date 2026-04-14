@@ -3,7 +3,8 @@ print("""
       WELCOME TO ECO-RIDE URBAN MOBILE SYSTEM
 -----------------------------------------------------------------------""")
 from functions.vehicle import Vehicle,Vehicle_data
-class Vehicle:
+from abc import ABC, abstractmethod
+class Vehicle(ABC):
       def __init__(self,vehicle_id,model,battery_percentage):
             self.vehicle_id=vehicle_id
             self.model=model
@@ -26,7 +27,9 @@ class Vehicle:
                   self.battery_percentage=battery_percentage
             else:
                   raise ValueError("Battery must be between 0 and 100")
-
+      @abstractmethod
+      def calculate_trip_cost(self,distance):
+            pass
 class Electric_Cars(Vehicle):
       def __init__(self, vehicle_id, model, battery_percentage,seating_capacity):
             super().__init__(vehicle_id, model, battery_percentage)
