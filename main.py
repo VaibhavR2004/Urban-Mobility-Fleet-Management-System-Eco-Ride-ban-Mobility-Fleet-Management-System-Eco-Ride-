@@ -47,3 +47,20 @@ class Scooters(Vehicle):
             self.time=time
             total = 1 + 0.15*(self.time)
             return f"Total trip coast :{total:.2f}"
+
+class Fleet_Management:
+      def __init__(self):
+            self.hubs={}
+      def add_hub(self,hub_name):
+            if hub_name not in self.hubs:
+                  self.hubs[hub_name]=[]
+      def add_vehicle(self,hub_name,vehicle_name):
+            if hub_name not in self.hubs:
+                  return f"{hub_name}, Not fount"
+            elif vehicle_name in self.hubs[hub_name]:
+                  return f"{vehicle_name}, Already Exist"
+            else:
+                  self.hubs[hub_name]=vehicle_name
+            
+
+
