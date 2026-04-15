@@ -76,16 +76,12 @@ class Fleet_Management:
             return result
       
 
-# ----------- TEST CASE FOR UC8 ----------- #
 
-# Create Fleet Manager
 fleet = Fleet_Management()
 
-# Add Hubs
 fleet.add_hub("Downtown")
 fleet.add_hub("Airport")
 
-# Create Vehicles
 car1 = Electric_Cars("C101", "Tesla Model 3", 90, 5)
 car2 = Electric_Cars("C102", "Nissan Leaf", 70, 5)
 
