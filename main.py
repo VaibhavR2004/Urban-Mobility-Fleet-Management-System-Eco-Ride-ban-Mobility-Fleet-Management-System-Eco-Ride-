@@ -2,7 +2,6 @@ print("""
 ---------------------------------------------------------------------
       WELCOME TO ECO-RIDE URBAN MOBILE SYSTEM
 -----------------------------------------------------------------------""")
-from functions.vehicle import Vehicle,Vehicle_data
 from abc import ABC, abstractmethod
 class Vehicle(ABC):
       def __init__(self,vehicle_id,model,battery_percentage):
@@ -32,7 +31,6 @@ class Vehicle(ABC):
             pass
       def __eq__(self, other):
             return self.vehicle_id==other.vehicle_id
-
 class Electric_Cars(Vehicle):
       def __init__(self, vehicle_id, model, battery_percentage,seating_capacity):
             super().__init__(vehicle_id, model, battery_percentage)
@@ -60,9 +58,61 @@ class Fleet_Management:
       def add_vehicle(self,hub_name,vehicle):
             if hub_name not in self.hubs:
                   return f"{hub_name}, Not fount"
-            existing_ids = [v.vehicle_if for v in self.hubs[hub_name]]
+            existing_ids = [v.vehicle_id for v in self.hubs[hub_name]]
 
             if vehicle.vehicle_id in existing_ids:
                   return f"{vehicle.vehicle_id}, Duplicate Vehicle"
 
             self.hubs[hub_name].append(vehicle)
+      def search_by_hub(self,hub_name):
+            if hub_name not in self.hubs:
+                  return[]
+            return self.hubs[hub_name]
+      def get_vehicle_battery(self):
+            result=[]
+            for vehicle in self.hubs.values():
+                  filtered = list(filter(lambda v: v.battery_percentage > 80, vehicle))
+                  result.extend(filtered)
+            return result
+      
+
+# ----------- TEST CASE FOR UC8 ----------- #
+
+# Create Fleet Manager
+fleet = Fleet_Management()
+
+# Add Hubs
+fleet.add_hub("Downtown")
+fleet.add_hub("Airport")
+
+# Create Vehicles
+car1 = Electric_Cars("C101", "Tesla Model 3", 90, 5)
+car2 = Electric_Cars("C102", "Nissan Leaf", 70, 5)
+
+scooter1 = Scooters("S101", "Ola S1", 85, 60)
+scooter2 = Scooters("S102", "Ather 450X", 60, 80)
+
+# Add Vehicles to Hubs
+fleet.add_vehicle("Downtown", car1)
+fleet.add_vehicle("Downtown", scooter1)
+
+fleet.add_vehicle("Airport", car2)
+fleet.add_vehicle("Airport", scooter2)
+
+
+print("\nVehicles in Downtown Hub:")
+for v in fleet.search_by_hub("Downtown"):
+    print(v.vehicle_id, v.model, v.battery_percentage)
+
+
+
+
+print("\nVehicles with Battery > 80%:")
+
+high_battery = fleet.get_vehicle_battery()
+
+for v in high_battery:
+    print(v.vehicle_id, v.model, v.battery_percentage)
+
+
+
