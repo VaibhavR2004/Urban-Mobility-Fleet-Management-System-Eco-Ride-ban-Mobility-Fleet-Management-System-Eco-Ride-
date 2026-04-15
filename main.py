@@ -100,14 +100,14 @@ fleet.add_vehicle("Airport", car2)
 fleet.add_vehicle("Airport", scooter2)
 
 
-print("\nVehicles in Downtown Hub:")
+print("Vehicles in Downtown Hub:")
 for v in fleet.search_by_hub("Downtown"):
     print(v.vehicle_id, v.model, v.battery_percentage)
 
 
 
 
-print("\nVehicles with Battery > 80%:")
+print("Vehicles with Battery > 80%:")
 
 high_battery = fleet.get_vehicle_battery()
 
