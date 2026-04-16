@@ -52,6 +52,7 @@ class Scooters(Vehicle):
 class Fleet_Management:
       def __init__(self):
             self.hubs={}
+            self.type={}
       def add_hub(self,hub_name):
             if hub_name not in self.hubs:
                   self.hubs[hub_name]=[]
@@ -74,9 +75,24 @@ class Fleet_Management:
                   filtered = list(filter(lambda v: v.battery_percentage > 80, vehicle))
                   result.extend(filtered)
             return result
-      
+      def get_vehicle_type(self):
+            vehicle_type={}
+            for vehicle in self.hubs.values():
+                  for v in vehicle:
+                        if isinstance(v,Electric_Cars):
+                              vehicle_type.setdefault("Car",[]).append(v)
+                        elif isinstance(v,Scooters):
+                              vehicle_type.setdefault("Scooter",[]).append(v)
+            return vehicle_type
+      def display_vehicle_type(self):
+            categorized = self.get_vehicle_type()
 
-
+            for category, vehicles in categorized.items():
+                        print(f"{category}:")
+                        for v in vehicles:
+                              print(f"  {v.vehicle_id},{v.model}")
+            
+#__main__
 fleet = Fleet_Management()
 
 fleet.add_hub("Downtown")
@@ -88,7 +104,6 @@ car2 = Electric_Cars("C102", "Nissan Leaf", 70, 5)
 scooter1 = Scooters("S101", "Ola S1", 85, 60)
 scooter2 = Scooters("S102", "Ather 450X", 60, 80)
 
-# Add Vehicles to Hubs
 fleet.add_vehicle("Downtown", car1)
 fleet.add_vehicle("Downtown", scooter1)
 
@@ -96,9 +111,9 @@ fleet.add_vehicle("Airport", car2)
 fleet.add_vehicle("Airport", scooter2)
 
 
-print("\nVehicles in Downtown Hub:")
-for v in fleet.search_by_hub("Downtown"):
-    print(v.vehicle_id, v.model, v.battery_percentage)
+# print("\nVehicles in Downtown Hub:")
+# for v in fleet.search_by_hub("Downtown"):
+#     print(v.vehicle_id, v.model, v.battery_percentage)
 
 
 
@@ -110,5 +125,7 @@ high_battery = fleet.get_vehicle_battery()
 for v in high_battery:
     print(v.vehicle_id, v.model, v.battery_percentage)
 
+# __USE CASE 9___main
+fleet.display_vehicle_type()
 
 
