@@ -50,3 +50,12 @@ car1.maintenance="Under Maintenance"
 print(car1.maintenance)
 print(fleet.total_count_maintenance())
 fleet.display_Maintenance_status()
+
+#USE CASE 11
+# print(fleet.sort_hub_vehicle('Downtown'))
+fleet.display_sorted_by_model('Downtown')
+
+print(car1)
+print(car2)
+print(scooter1)
+print(scooter2)

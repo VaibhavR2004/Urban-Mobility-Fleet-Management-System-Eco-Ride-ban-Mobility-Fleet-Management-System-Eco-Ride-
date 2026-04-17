@@ -1,32 +1,34 @@
 from abc import ABC, abstractmethod
 class Vehicle(ABC):
-    def __init__(self,vehicle_id,model,battery_percentage):
-            self.vehicle_id=vehicle_id
-            self.model=model
-            self.battery_percentage= battery_percentage
-            self.__maintenance_status="Available"
-            self.__rental_price=0
-    @property
-    def maintenance(self):
-        return self.__maintenance_status
+        def __init__(self,vehicle_id,model,battery_percentage):
+               self.vehicle_id=vehicle_id
+               self.model=model
+               self.battery_percentage= battery_percentage
+               self.__maintenance_status="Available"
+               self.__rental_price=0
+        @property
+        def maintenance(self):
+                return self.__maintenance_status
 
-    @property
-    def get_rental(self):
-            return f"{self.vehicle_id} rental price {self.__rental_price}"
+        @property
+        def get_rental(self):
+                return f"{self.vehicle_id} rental price {self.__rental_price}"
+        def get_batter(self):
+                return f"{self.vehicle_id} battery is {self.battery_percentage}%"
 
-    def get_batter(self):
-            return f"{self.vehicle_id} battery is {self.battery_percentage}%"
+        def setter_battery(self,battery_percentage):
+                if 0<=battery_percentage<=100:
+                        self.battery_percentage=battery_percentage
+                else:
+                        raise ValueError("Battery must be between 0 and 100")
+        @abstractmethod
+        def calculate_trip_cost(self,distance):
+                pass
+        def __eq__(self, other):
+                return self.vehicle_id==other.vehicle_id
+        @maintenance.setter
+        def maintenance(self, status):
+                self.__maintenance_status = status
+        def __str__(self):
+                return f"{self.vehicle_id} --> Model : {self.model}, Battery_Status : {self.battery_percentage}"
 
-    def setter_battery(self,battery_percentage):
-            if 0<=battery_percentage<=100:
-                self.battery_percentage=battery_percentage
-            else:
-                raise ValueError("Battery must be between 0 and 100")
-    @abstractmethod
-    def calculate_trip_cost(self,distance):
-            pass
-    def __eq__(self, other):
-            return self.vehicle_id==other.vehicle_id
-    @maintenance.setter
-    def maintenance(self, status):
-            self.__maintenance_status = status

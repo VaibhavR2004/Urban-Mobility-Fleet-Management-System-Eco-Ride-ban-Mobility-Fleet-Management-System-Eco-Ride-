@@ -52,12 +52,28 @@ class Fleet_Management:
                         freq[v.maintenance]=freq.get(v.maintenance, 0)+1
             return freq
     def display_Maintenance_status(self):
-            freq = self.total_count_maintenance()
-            print(f"<----Fleet Status Summary---->")
-            total =0
-            for v, m in freq.items():
-                print(f"{v:<20}   :   {m}")
-                total+= m
-            print("-"*30)
-            print(f"{'Total Vehicles':<20}   :   {total} ")
+        freq = self.total_count_maintenance()
+        print(f"\n<----Fleet Status Summary---->")
+        total =0
+        for v, m in freq.items():
+            print(f"{v:<20}   :   {m}")
+            total+= m
+        print("-"*30)
+        print(f"{'Total Vehicles':<20}   :   {total} ")
+    
+    def sort_hub_vehicle(self,hub_name):
+          if hub_name not in self.hubs:
+                return "No Hub found"
+          sor=sorted(self.hubs[hub_name],key=lambda v: v.model)
+          return sor
+    def display_sorted_by_model(self, hub_name):
+        result = self.sort_hub_vehicle(hub_name)
 
+        if isinstance(result, str):
+            print(result)
+            return
+
+        print(f"\nVehicles in {hub_name} (Sorted by Model):")
+
+        for v in result:
+            print(v.model)
